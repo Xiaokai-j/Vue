@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <!-- 1、设置vue所管理的视图 -->
+    <div id="app">
+        <!-- 5、在视图中通过{{ }}使用data中的数据 -->
+        <p>名字：{{name}}</p>
+        <p>体重：{{weight}}</p>
+        <div>
+            头发：{{hair}}
+        </div>
+        <span style="font-size: 20px; color: aqua;">
+            年龄：{{age}}
+        </span>
+    </div>
+    <!-- 2、引入vue.js  这个时候就有了一个全局对象 vue-->
+    <script src="./js/vue.js"></script>
+    <!-- 3、实例化对象  -->
+    <script>
+        // 实例化对象   vm 相当于实例对象
+        // 4、设置Vue实例的选项:如el、data... new Vue({选项:值});    
+        var vm = new Vue({
+            // 构造函数的参数
+            el: '#app', //指的是  管理视图的选择器   必须要设置的
+            data: {     //指的是  数据
+                // 响应式数据 key ：value
+                name: 'Hollo word my name is xiaokai',
+                weight: '120kg',//体重
+                hair: '1000根',//头发
+                age: '22岁'
+            }
+        });
+    </script>
+</body>
+
+</html>

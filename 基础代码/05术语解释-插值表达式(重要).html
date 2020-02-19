@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 纯变量形式 -->
+        <p>{{name}}</p>
+        <p>{{msg}}</p>
+        <!-- 赋值的形式 -->
+        <p>{{name = "小凯"}}</p>
+        <!--逻辑判断  -->
+        <p>{{msg > 10}}</p>
+        <!-- 逻辑运算 -->
+        <p>{{msg-house}}</p>
+        <!-- 方法调用  方法调用需要小括号-->
+        <p>{{getname()}}</p>
+        <!-- 三元表达式 -->
+        <p>{{ msg>10000 ? "入职":"离职"}}</p>
+        <!-- 插值表达式不能写 关键字 var a = 10 -->
+
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                name: '凯',
+                msg: '10000',
+                house: '1000',
+            },
+            methods: {
+                // 获取名称
+                getname() {
+                    return "猪肉"
+                }
+            }
+        })
+
+
+    </script>
+    </script>
+</body>
+
+</html>

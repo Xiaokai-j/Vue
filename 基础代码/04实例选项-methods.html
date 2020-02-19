@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <p>{{name}}</p>
+        <p>{{msg}}</p>
+
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                name: '嗨',
+                msg: '跟进'
+            },
+            methods: {
+                // 多个方法
+                //getName() { }   es6 写法
+                //getName function() { }  es5 写法
+                getName() {
+                    // this 指向 vm 实例
+                    alert("哈喽" + this.name);
+                    this.getName2()
+                },
+                getName2() {
+                    alert("嗨")
+                }
+            }
+        });
+        // getName.name();
+
+    </script>
+</body>
+
+</html>

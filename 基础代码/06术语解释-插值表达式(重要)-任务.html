@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 插值表达式 -->
+        <p>程雨轩</p>
+        <p>{{ msg + "知道吗" }}</p>
+        <p>{{msg}}成撒低级</p>
+        <!--reverse() 用于颠倒数组中的数      -->
+        <!-- <p>{{list.reverse().join}}</p>  死循环 -->
+        <p>{{reverse()}}</p>
+        <!-- split("")  切割数组 -->
+        <p>{{ list.join("").split("").reverse("").join("") }}</p>
+
+
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: '我要成为前端程序员',
+                showMessage: "false",
+                list: [1, 2, 3],
+            },
+            methods: {
+                // 获取名称
+                reverseList() {
+                    //    this指向 vm实例
+                    let newArr = [...this.list]//...延展运算法 得到一个新数组  和原数组没关系
+                    newArr.reverse().join("")
+                }
+            }
+        });
+
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>
