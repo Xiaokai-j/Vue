@@ -22,15 +22,31 @@
         <!-- 添加框 -->
         <div class="form-inline">
           <div class="form-group">
-            <input type="text" class="form-control" placeholder="请输入你理想的公司" />
+
+            <!-- 声明一个变量 v-model双向绑定 input -->
+            <input v-model.trim='name' type="text" class="form-control" placeholder="请输入你理想的公司" />
+            <!-- 
+              v-model.trim='name' 输入首尾空格过滤 
+
+            -->
           </div>
-          <button class="btn btn-success" type="submit">添加</button>
+
+          <!-- 注册按钮点击事件 -->
+          <!-- 、disabled 变化的属性 动态绑定属性  控制按钮-->
+          <!-- 、v-bind:disabled  为true 就是不了编辑  false 就是可编辑 -->
+          <!-- !取反 -->
+          <button :disabled='!name' @click='addItem' class="btn btn-success" type="submit">添加</button>
+          <!--  -->
         </div>
         <!-- 搜索框 -->
         <div class="form-inline" style="margin: 20px 0">
+
+
           <div class="form-group">
-            <input type="text" class="form-control" placeholder="搜索关键字" />
+            <input v-model="serchVal" type="text" class="form-control" placeholder="搜索关键字" />
           </div>
+
+
         </div>
       </div>
     </div>
@@ -51,10 +67,18 @@
               <td>{{index + 1}}</td>
               <td>{{item.name}}</td>
               <td>{{item.date}}</td>
+
+
+
+              <!-- 通过方法传递当前删除的索引 -->
               <td>
-                <a href="#">删除</a>
+                <a href="#" @click.prevent='delItem(index)'>删除</a>
               </td>
+              <!-- .prevent阻止默认跳转事件 -->
             </tr>
+
+
+
 
             <!-- 这个tr是当没有数据的时候才显示，根据条件决定该元素是否渲染 -->
             <!-- <tr v-if='list.length===0'>
@@ -79,10 +103,60 @@
       el: '.container-fluid',//Vue实例所管理的视图
       data: {
         // 响应式数据
+        name: '',//作为双向绑定那个的数据
         //定义表格数据
         list: [{ name: '阿里巴巴', date: new Date() },
         { name: '字节跳动', date: new Date() },
         { name: '腾讯', date: new Date() }],
+        // 计算属性
+        serchVal: ''
+      },
+      methods: {
+        // 添加数据
+        addItem() {
+          this.name
+          this.list.unshift({ name: this.name, date: new Date() })
+          // unshift => 数组的方法 数组前面加数据
+          // 清空输入框
+          this.name = ""//空字符串
+        },
+        delItem(i) {
+          // 需要知道删除谁  通过方法传递当前删除的索引
+          // 根据索引从数组删除数据
+          // 
+          if (confirm("是否删除此数据")) {
+            // 如果确定删除
+
+            // 第一种删除方法
+            this.list.splice(i, 1)//移除数据
+
+            // 第二种移除方法   
+            // filter(function( ){ })  返回一个新数组
+            // filter(function( ){ return 条件表达式(true =>选项就会返回插入新数组) false => 就不返回}) 
+
+            // this.list = this.list.fliter(function (item, index) {
+            //   return index !== i  //找出数据之外的所有的数
+            // }),
+
+            // 第三种删除方法
+            // this.list = this.list.fliter((item, index) => index !== i)
+          }
+        }
+      },
+
+      // 定义一个计算属性
+      computed: {
+        // 通过 输入的搜索内容  和列表内容
+        filterList() {
+          // this 指向vm实例
+          this.list//数组
+          this.serchVal//关键字
+          // 实现搜索功能  在一个数组中搜索和关键字相关的数据
+          this.list.filter((item) => {
+            // 筛选条件    返回一个条件表达式   这里得用箭头函数，否则娶不到this值
+            item.name.includes(this.serchVal)
+          })
+        }
       }
     })
 

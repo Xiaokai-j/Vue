@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <p>税前工资：{{money}}</p>
+        <p>公积金扣款：{{ gMoney }}</p>
+        <p>养老保险：{{ yMoney }}</p>
+        <p>个人所得税：{{ dMoney }}</p>
+
+
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        // 计算属性实现一个计算税后工资
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                money: 10000
+            },
+            methods: {
+
+            },
+            computed: {
+                gMoney() {
+                    // 税前工资
+                    return this.money * 0.12
+                },
+                yMoney() {
+                    // 养老保险
+                    return this.money * 0.08
+                },
+                dMoney() {
+                    // 医疗保险
+                    return this.money * 0.02
+                },
+                sMoney() {
+                    // 个人所得税
+                    return (this.money - this.gMoney - this.dMoney - 5000) * 0.02
+                },
+                rMoney() {
+                    return this.money - this.gMoney - this.yMoney - this.dMoney - this.sMoney
+
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

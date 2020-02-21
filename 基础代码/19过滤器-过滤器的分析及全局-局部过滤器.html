@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 
+        场景: data中的数据格式(日期格式/货币格式/大小写等)需要数据时
+        使用位置:{{}}和v-bind="表达式"
+        具体用法:{{msg | 过滤器名字}} | 称之为 管道
+        分类:  过滤器分为局部和全局
+        全局注册的方式 :  Vue.filter(过滤器名称, `过滤器函数`)  
+     -->
+    <!-- 
+         将原始数据 =>过滤器 => 显示数据(不会该表原始数据)
+      -->
+
+    <div id="app">
+        <h3>全局过滤器 changeName </h3>
+        <p>{{name | changeName }}</p>
+        <p>{{name}}</p>
+        <input type="text" v-model="name">
+
+        <h3>局部过滤器 changeName2</h3>
+        <p>{{name | changeName2 }}</p>
+        <p>{{name}}</p>
+    </div>
+    <div id="app1">
+        <h3>Vue 实例二</h3>
+        <p>{{name}}</p>
+        <p>{{name | changeName }}</p>
+        <p>{{name | changeName2 }}</p>
+
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        // 全局过滤器应该在Vue之前注册
+        // 全局过滤器:  一旦注册, 在所有的Vue实例或者组件实例都可以使用
+        // 局部过滤器:只能`在注册的Vue或者组件实例上使用
+        // 语法：Vue.filter(名称,函数)
+        Vue.filter("changeName", function (value) {
+            // 过滤器函数 => 肖 改为 孟
+            // 数组的map()方法
+
+            // 过滤器必须要有返回值
+            return value.split("").map(function (item, index) {
+                if (index === 1) {
+                    return "杰"
+                }
+                return item
+            }).join("")
+        })
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                name: '孟祥凯'
+            },
+            methods: {},
+            filters: {
+                // 对象  value代表 管道前面的表达式传递的值
+                changeName2: function (value) {
+                    return value.split("").map(function (item, index) {
+                        if (index === 2) {
+                            return "战"
+                        }
+                        return item
+                    }).join("")
+                }
+            }
+        });
+        var vm1 = new Vue({
+            el: '#app1',
+            data: {
+                name: '猪八戒'
+            },
+        })
+
+    </script>
+</body>
+
+</html>

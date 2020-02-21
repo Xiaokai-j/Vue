@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!--  
+        作用: 通过ref特性可以获取元素的dom对象
+        使用:  给元素定义 ref属性, 然后通过$refs.名称 来获取dom对象 
+    -->
+    <div id="app">
+        <!-- 定义ref -->
+        <input type="text" ref="myInput" />
+        <button @click="getValue">按钮</button>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+
+            },
+            methods: {
+                getValue() {
+                    // 获取input的value内容
+                    alert()
+                    this.$refs.myInput.value
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

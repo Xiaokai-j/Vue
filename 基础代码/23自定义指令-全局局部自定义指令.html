@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <p v-wjl=""></p>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        //全局自定义指令 在 vue 实例化之前 进行
+        // 语法 Vue.directive(指令名称,{inserted,update})
+        Vue.directive("wjl", {
+
+            inserted(dom, Option) {
+
+                dom.innerText = option.value + "$$孟祥凯"
+            },
+            // 数据变化的时候会执行 update
+            update(dom, Option) {
+                dom.innerText = option.value + "$$孟祥凯"
+
+            }
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                name: "圆圆"
+            },
+            methods: {},
+            directives: {
+                // 局部自定义指令  作用在img标签上  默认给 img 一个地址
+                'gir': {
+                    inserted(dom, option) {
+                        //    dom是作用对象 img 
+                        dom.src = ""
+                        dom.style.width = "200px"
+                        dom.style.height = "200px"
+                    },
+                    update(dom, option) {
+
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

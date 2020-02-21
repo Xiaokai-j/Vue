@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        [v-clock] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <div style="font-size: 30px; color: aqua;">
+            {{name}}
+            <!-- vue 实例化之前  插值表达式还没有渲染
+                场景: 当页面初次渲染, 页面模板闪屏现象,可以用v-cloak解决
+                v-cloak 可以在渲染完成之后 自动将 v-cloak 指令移除
+               **`注意`**  可以一次性 将v-cloak引用在实例视图上  避免多次写入标签
+            -->
+            <div v-cloak>{{msg}}</div>
+            <div v-cloak>{{tip}}</div>
+            <!-- 一个东西单反需要重复，就需要考虑有没有好的方案 -->
+        </div>
+
+
+        <!-- v-once -->
+        <!-- 
+            场景:  当只需要对数据进行首次渲染的时候,可以采用v-once指令
+            作用: 使得所在元素只渲染一次  
+            只需要在标签上写上 v-once指令即可 
+        -->
+        <p>{{money}}</p>
+        <!-- 写个v-once 视图将不会在更新， -->
+        <p v-once>{{money}}</p>
+        <input type="text" v-model="money">
+
+
+
+        <!-- v-pre -->
+        <!--=如果你就像显示{{name}}-->
+        <!-- 
+            场景: 假如你不希望Vue对你节点下的内容进行编译渲染,
+            可以使用v-pre 指令让渲染**`跳过`**该节点 
+        -->
+        <div v-pre>{{name}} {{a}}</div>
+
+
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                name: '犯我中华，虽远必诛',
+                msg: '加油',
+                tip: '成年',
+                money: '5000',
+            },
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>
