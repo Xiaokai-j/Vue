@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- v-for 可以根据一组数组或对象的选项列表进行渲染 -->
+    <!--
+        v-for 指令需要使用 itrm in items  或者  item of items 
+        前面的item是自定义变量名
+        items 是源数据数组、对象来源于data中的变量
+    -->
+    <!-- 循环生成谁，就在谁的标签 -->
+
+    <div id="app">
+        <ul>
+
+            <!-- 
+                v-for  itrm in items 
+                < 循环生成谁，就在谁的标签 
+                <li v-for="item of items"></li>  结果一样
+            -->
+            <!-- <li v-for="abc in list">
+                
+            <div>
+                <span>王者：</span>{{abc}}
+            </div>
+            </li> -->
+        </ul>
+
+        <ul>
+            <!-- 索引下标 加上括号 (abc,index)in list-->
+            <li v-for="(abc, index) in list">
+                排名：{{index+1}}位{{abc}}
+            </li>
+        </ul>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                list: ["貂蝉", "朱丽叶", "妲己", "无名氏"],
+                manlist: [
+                    { name: '肖战', img: '' },
+
+                ]
+            },
+            methods: {}
+        });
+
+    </script>
+</body>
+
+</html>

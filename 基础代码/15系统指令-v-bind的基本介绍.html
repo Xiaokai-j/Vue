@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 
+        v-bind指令 可以帮助我们 把data中变量绑定到标签的属性上
+       作用: 绑定标签上的**`任何属性`
+       语法:  
+             v-bind:属性="表达式"  或者 :属性=""表达式
+     -->
+    <div id="app">
+        <div v-bind:id='id'></div>
+        <img v-bind:src="src" alt="">
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                id: 'hello',
+                src: 'https://pics6.baidu.com/feed/8cb1cb1349540923ce6ea671f349ec0fb3de4955.jpeg?token=c1e607df6f5db497cb89cc5b750a88f7&s=94AA62B14006F6EE58258090030010D2',
+            },
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>

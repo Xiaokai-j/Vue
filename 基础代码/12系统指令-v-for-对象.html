@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 
+            v-for 可以循环对象
+            item 指的是整个gir(值)
+        -->
+        <ul>
+            <li v-for='(value,key,index) in gir'>
+                {{key}}:{{value}}:{{index}}
+            </li>
+        </ul>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                gir: {
+                    name: '你的米粒',
+                    age: '165cm',
+                    weight: '50kg',
+                    money: '20'
+                },
+            },
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>

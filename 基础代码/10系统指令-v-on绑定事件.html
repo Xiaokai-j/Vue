@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- v-on 注册事件       v-on：事件名.修饰符="方法名" 
+        .修饰符可以不写
+    -->
+    <div id="app">
+        <button v-on:click="happy">今天</button>
+        <!-- 简写方法  @事件名=“方法名” -->
+        <button @click='happy'>明天</button>
+        <!-- 另外一种方式 -->
+        <button @click=nice()></button>
+        <!-- 带修饰符   once  表示这个事件指执行一次 -->
+        <button @click.once="btn"></button>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: '开心',
+                age: '22'
+            },
+            methods: {
+                happy() {
+                    // 方法里面this指向  vm实例
+                    alert(this.msg)
+                    alert(this.age)
+                },
+                nice(even) {
+                    console.log(even)
+                    alert(this.age)
+                },
+                btn() {
+                    alert('我是带修饰符的')
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .selectDiv {
+            font-size: 40px;
+            color: aqua;
+
+        }
+
+        .fontSelect {
+            font-size: 30px;
+            color: red;
+        }
+
+        .green {
+            border: 2px solid #000;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 
+            绑定class对象语法   
+            :class="{ class名称": 布尔值 }" 
+            布尔值是true就有class名称，否则反之
+        -->
+    <div id="app">
+        <div :class='{select:true}'>我太难了</div>
+        <div :class='{select:false}'>我太难</div>
+        <div :class='{selectDiv：showSelectClass}'>难</div>
+        <button @click=''>点击改变样式</button>
+
+        <!-- 
+            绑定class数组语法[] 
+            :class="[class变量1,class变量2..]" 
+        -->
+        <div :class="[font,green]">
+            马上毕业了
+        </div>
+        <!-- 
+            绑定style对象语法: 
+            :style="{css属性名: 变量}" 
+            font-size 在对象语法中 要改成小驼峰命名 即：font-size =》fontSize
+        -->
+        <!-- 当属性名和变量名一致的时候，可以只写一个
+        <p :style='{ fontSize}'></p>
+        -->
+        <p :style='{ fontSize:fontSize}'>
+            疫情过后，你想见谁？
+        </p>
+
+        <!-- 
+            绑定style-数组语法
+            绑定style数组语法:  
+            :style="[对象1,对象2...]"
+         -->
+        <p :style="[obj,obj1]">
+            愿一切安好
+        </p>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                showSelectClass: false,
+                font: 'fontSelect',
+                green: 'green',
+                fontSize: '70px',
+                obj: {
+                    color: 'yello',
+                    fontSize: '40px',
+                },
+                obj1: {
+                    color: 'pink',
+                },
+            },
+            methods: {
+                changeClass() {
+                    // this指向vm
+                    this.showSelectClass = !showSelectClass
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
