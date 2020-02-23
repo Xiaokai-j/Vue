@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<button>获取</button>
+<script src=""></script>
+<script>
+    function getHandSomeList() {
+        // 获取内容
+        axios.get('http://localhost:3000/handsome').then(function (sesult) {
+            console.log(result.data);
+        })
+    }
+    function deleteBeauty() {
+        // 删除需要的delete类型
+        axios.delet("http://localhost:3000/handsome/4").then(function () {
+            console.log("成功删除");
+        })
+    }
+    function addBeauty() {
+        // 新增类型
+        // axios.post(url,{body参数})
+        axios.post("http://localhost:3000/handsome", { name: '肖战' }).then(function () {
+            console.log("成功新增");
+        })
+    }
+    function updateBeauty() {
+        // 修改
+        // axios.put(url,{ body参数 })
+        axios.put("http://localhost:3000/handsome/4", { bame: '肖凯' }).then(function () {
+            console.log("成功修改");
+        })
+    }
+</script>
+
+</html>

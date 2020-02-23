@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- Promise是ES6中新推出的一个解决回调函数写法的一个对象 -->
+
+    <!-- Promise 对象用于表示一个异步操作的最终完成 (或失败), 及其结果值. -->
+    <!-- 
+        reslove 和 reject是两个方法
+                relove 是 **`成功`**执行该异步操作的函数,方法里可以携带成功执行时的参数
+                reject是 **`失败`**执行该异步操作的函数, 方法里携带 错误信息 
+    如果一个promise想要结束，你必须执行 reslove 或者 reject
+    -->
+
+    <!-- (语法)：实例化promise之后，promise中的函数会立即执行
+        new Promise(function(resolve, reject){}) 
+    -->
+
+    <script>
+
+        //异步操作 
+
+        // 实例化一个promise 模拟一个异步操作
+        new Promise(function (resolve, reject) {
+            setTimeout(function () {
+                // 返回一个数字  100
+                resolve(100) // 这里表示 我们成功执行了 promise,并且返回给当前的promise执行链
+            }, 2000)
+        }).then(function (data) {
+            // promise实例的`then`方法里 接收到上一个 **`成功执行链`**的结果, **`注意, 只有 `resolve`了 才能进入到 `then`中,
+            // 注意 这里的data就是 100 , 因为上一个执行操作 resolve得到了100 ,所以这里可以得到 100
+
+            // 第二次请求
+            // OK, 这就是一个异步操作的**`链式调用`**, 假设我们需要再次进行第二次异步操作,怎么做 ?  
+            // 我们需要在then方法的回调函数中, 再进行一次异步操作, 我们刚讲了 一个异步操作 就是一个promise, 所以应该在 then中, 再写一个promise
+            //  我们在这里加了return 是将第二次的第二次异步操作返回给了根部执行链 
+            return new Promise(function (resolve, reject) {
+                setTimeout(function () {
+                    // resolve(100 + data)//将本次结果加上上一次的
+
+
+                    // reject 必须写在出错行里面
+                    // 那么如果说第二次执行失败了,不能往下走了怎么办?
+                    // 这个时候我们的reject函数 就用上了, 不论在哪一层出问题, 只要你 reject, 那么错误都会进入到 `根级执行链的 `catch`方法中
+                    reject("第二次计算出bug了")
+
+                }, 2000)
+            })
+        }).then(function (data) {
+            // alert(data)
+            // 第三次请求
+            return new Promise(function (resolve, reject) {
+                setTimeout(function () {
+                    resolve(100 + data)//将本次结果加上上一次的
+                }, 2000)
+            })
+        }).catch(function (error) {
+            // 捕获错误
+            console.log(error);
+
+        })
+
+
+        // 同步操作
+        // 如果你的操作时同步操作, 那么可以直接return 结果给下个执行
+        new Promise(function (resolve, reject) {
+            setTimeout(function () {
+                resolve(1000)
+            }, 1000)
+        }).then(function (data) {
+
+            return data + 1000  // 如果确定是同步操作 可以直接返回
+        }).then(function (data) {
+            console.log(data)
+        })
+
+
+        // **`axios()`**或者 **`axios.get()`** 这种方法的得到的就是一个**`new Promise()`**
+        axios().then(function (data) {
+            // 获取结果
+        }).catch(function () {
+            // 获取失败
+        })
+
+    </script>
+</body>
+
+</html>

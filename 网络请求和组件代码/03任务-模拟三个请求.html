@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 
+        `任务` 
+        尝试 `模拟三个请求`, 第一个请求得到 一个随机数, 第二个请求等待、请求1`完成`,拿到数字乘以 5,并转成数字, `向上取整`, 第三个请求 拿到`请求2`的结果, 循环生成 `对应长度`的  `img` 标签到页面上(给个美女或者帅哥照片)
+        提示:  可以和vuejs结合起来,
+        要求: 请求1 , 耗时 500毫秒  请求2  同步操作  
+    -->
+    <div id="app">
+        <button @click="text"> promise测试</button>
+        <img style="width:200px;height: 200px; margin: 10px;" :src="item" alt="" v-for="item in list">
+
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                list: []
+            },
+            methods: {
+                text() {
+                    // 模拟promise
+                    new promise(function (resolve, reject) {
+                        // 请求1 , 耗时 500毫秒
+                        setTimeout(function () {
+                            // 执行逻辑
+                            resolve(Math.random())//随机数
+                        }, 500)
+                    }).then(function (rm) {//获取随机数
+                        return Math.ceil(rm * 10)  //同步代码   ceil向上取整
+                    }).then((data) => {//第三次请求
+                        // 第二个请求等待、请求1`完成`,拿到数字乘以 5,并转成数字, `向上取整`, 第三个请求 拿到`请求2`的结果, 循环生成 `对应长度`的  `img` 标签到页面上(给个美女或者帅哥照片)
+                        // 拿到一个随机整数
+                        // 数据要显示在页面上  数据响应式   生成对应长度的list地址
+                        // 生成一个数组
+                        this.list =
+                            Array.from(Array(data)).map(item => 'https://pics3.baidu.com/feed/83025aafa40f4bfb76888562fbd447f6f63618c9.jpeg?token=fc692c7aedd366cc3dcba01913922e4c&s=07A7CAA6DE123CDE3CC597B80300D00B')
+                    })
+                }
+            }
+        });
+        setTimeout(function () {
+            console.log("1")
+        }, 0)
+        console.log("2")
+    </script>
+    <!-- 
+    //     同步就是不耗时间的任务
+    //     异步就是耗时间任务 => setTimeout  /  setInterval  /  ajax => 进入到一个任务队列
+
+    //  -->
+</body>
+
+</html>
