@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div id="app">
+        <!-- 设置导航 -->
+        <router-link to="/hmbb">海绵宝宝</router-link>
+        <router-link to="/pdx">派大星</router-link>
+        <router-link to="/zyg">章鱼哥</router-link>
+        <!-- 设置容器 -->
+        <router-view></router-view>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script src="./js/vue-router.js"></script>
+    <script>
+        var hmbbObj = {
+            template: ` <img style='height:400px;width:500px' src="http://img5.imgtn.bdimg.com/it/u=1672477765,2527992874&fm=26&gp=0.jpg">`
+        }
+        var pdxObj = {
+            template: ` <img style='height:400px;width:500px' src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3021490275,3984487247&fm=26&gp=0.jpg">`
+        }
+        var zygObj = {
+            template: ` <img style='height:400px;width:500px' src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2415316764,2237934405&fm=26&gp=0.jpg">`
+        }
+        var router = new VueRouter({
+            //  配置路由表
+            routes: [
+                {
+                    path: '/hmbb',
+                    component: hmbbObj,
+                    name: ""
+                }, {
+                    path: '/pdx',
+                    component: pdxObj,
+                    name: ""
+                }, {
+                    path: '/zyg',
+                    component: zygObj,
+                    name: ""
+                }
+            ]
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            router
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #app {
+            width: 1000px;
+            margin: 30px auto;
+            display: flex;
+            /* 照片横过来，换行 */
+            flex-wrap: wrap;
+        }
+
+        .list-item {
+            margin: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .list-item.img {
+            width: 280px;
+            height: 200px;
+        }
+
+        .info {
+
+            height: 60px;
+            padding: 0 10px;
+            line-height: 20px;
+            font-weight: bold;
+            position: relative;
+        }
+
+        /* 定义加减组件样式 */
+        .add-count {
+            position: absolute;
+            right: 10px;
+            bottom: 0px;
+        }
+
+        .add-count span {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            line-height: 35px;
+            font-size: 30px;
+        }
+
+        .addcut-span {
+            color: #ffffff;
+            background-color: aqua;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            /* 小手 */
+            cursor: pointer;
+            user-select: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 使用组件 -->
+        <list-item v-for="item in 10" :key="item" />
+
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        // 定义一个全局组件  list-item 为商品内容
+        // 应该在vue实例化之前执行 全局组件的注册   任何位置都可以使用
+        Vue.component('list-item', {
+            // 组件内容
+            template: `
+            <div class="list-item">
+                <div class="img">
+                <img src="https://img.alicdn.com/imgextra/https://img.alicdn.com/bao/uploaded/i2/305358018/O1CN01NIcEpY296IExzqw0m-305358018.jpg_430x430q90.jpg">
+                </div>
+                <div class="info">
+                <span>衣服</span>
+
+                <add-count></add-count>
+                </div>
+                
+            </div>  `,//要求只有一个跟节点
+
+            components: {       //这是在list-item的实例上注册的，只能用在list-item上   局部组件
+                "add-count": {
+                    template: `
+                    <div class="add-count">
+                        <span class="addcut-span">-</span> 
+                        <span >0</span> 
+                        <span class="addcut-span">+</span>
+                    </div>`
+                }
+            }
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            component: {}//注册vue实例  只能在vue实例上使用
+        });
+    </script>
+</body>
+
+</html>

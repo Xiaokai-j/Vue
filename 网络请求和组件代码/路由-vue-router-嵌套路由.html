@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>路由-嵌套路由</title>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to='/main'></router-link>
+        <router-link to="/fushi"></router-link>
+        <router-link to="/zhushi"></router-link>
+
+    </div>
+    <script src="./js/vue.js"></script>
+    <script src="./js/vue-router.js"></script>
+
+    <script>
+        var mianObj = {
+            template: `
+            <div>饮料</div>
+            `
+        }
+        var fushiObj = {
+            template: `
+            <div>主食</div>
+            `
+        }
+        var zhushiObj = {
+            template: `
+            <div>服饰</div>
+            `
+        }
+        var router = new VueRouter({
+            router: [{
+                path: '/',
+                redirect: '/main'
+            }
+                , {
+                path: '/main',
+                componter: mianObj
+            },
+            {
+                path: '/fushi',
+                componter: zhushiObj
+            },
+            {
+                path: '/zhushi',
+                componter: fushiObj
+            }]
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>

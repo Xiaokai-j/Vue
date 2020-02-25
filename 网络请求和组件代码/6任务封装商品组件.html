@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        /* 图片横向且有边距 */
+        #app {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .produce-item {
+            position: relative;
+        }
+
+        .produce-elec img {
+
+            width: 277px;
+            height: 277px;
+            border-radius: 4px;
+            margin: 20px;
+        }
+
+        .info {
+
+            position: absolute;
+            right: 40px;
+            bottom: 0;
+        }
+
+        .info span {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            line-height: 35px;
+            font-size: 30px;
+            text-align: center;
+            /* 选中 */
+            user-select: none;
+        }
+
+        .addcut {
+            border-radius: 50%;
+            background-color: aqua;
+            color: #fff;
+            /*  */
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <!-- 使用组件   直接写组件标签即可 -->
+        <!-- v-for="item in 100" 循环一百次    v-for 也可以循环 -->
+        <produce-elec v-for="item in 10"></produce-elec>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        // 全局组件还是局部组件
+        // 语法：Vue.componey(组件名, 组件对象)
+        // abc或者abc - d     produce-elec电子商品
+        var com = {}
+        // 全局组件
+        Vue.component("produce-elec", {
+            // 组件对象         
+            //<span>-</span> <span>0</span> <span>+</span>   视图里面的加减数量图
+            template: `
+            <div class="produce-item">
+                <img src='https://img.alicdn.com/imgextra/https://img.alicdn.com/bao/uploaded/i2/305358018/O1CN01NIcEpY296IExzqw0m-305358018.jpg_430x430q90.jpg'>
+                <div class='info'> 
+                    <span v-if="count" @click="cut" class="addcut">-</span> 
+                    <span v-if="count">{{ count }}</span> 
+                    <span @click="add" class="addcut">+</span>
+                </div>
+            </div>
+            `,  //用来展现页面结构，且只有一个根节点
+            data() {
+                return {
+                    count: 0//响应式数
+                }
+            },
+            methods: {
+                cut() {
+                    this.count--
+                },
+                add() {
+                    this.count++
+                }
+            }
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>

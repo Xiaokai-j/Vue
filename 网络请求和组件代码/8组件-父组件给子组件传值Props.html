@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #app {
+            width: 1000px;
+            margin: 30px auto;
+            display: flex;
+            /* 照片横过来，换行 */
+            flex-wrap: wrap;
+        }
+
+        .list-item {
+            margin: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .list-item.img {
+            width: 280px;
+            height: 200px;
+        }
+
+        .info {
+
+            height: 60px;
+            padding: 0 10px;
+            line-height: 20px;
+            font-weight: bold;
+            position: relative;
+        }
+
+        /* 定义加减组件样式 */
+        .add-count {
+            position: absolute;
+            right: 10px;
+            bottom: 0px;
+        }
+
+        .add-count span {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            line-height: 35px;
+            font-size: 30px;
+        }
+
+        .addcut-span {
+            color: #ffffff;
+            background-color: aqua;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            /* 小手 */
+            cursor: pointer;
+            user-select: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 使用组件  循环生成若干个 list-item-->
+        <list-item @changenum="listChange" :item='item' v-for="item in list" />
+        <!-- // 为什么写: 因为是动态变量 所以写: -->
+
+
+
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        // 定义一个全局组件  list-item 为商品内容
+        // 应该在vue实例化之前执行 全局组件的注册   任何位置都可以使用
+        Vue.component('list-item', {
+            props: ["item"],//用item来接收props属性
+            // 组件内容
+            template: `
+            <div class="list-item">
+            
+                <div class="img">
+                <img :src="item.img">
+                </div>
+                <div class="info">
+                <span>{{item.title}}</span>
+
+                <add-count @changenum=" listItemChange" :num="item.count"/>
+                </div>
+            </div>  `,//要求只有一个跟节点
+            methods: {
+                listItemChange(num) {
+                    // 需要继续传递  传给vue实例
+                    // vue实例需要知道修改每一条记录
+                    // 依然用 子 传 父
+
+                    // 第一种方法
+                    this.$emit("changenum", item.id, num)//this 指的是list-item的组件实例
+                    // 与下面的 changenum没有关系  两个事件
+
+                    // 第二种方法
+                    // this.$emit("changenum", { ...this.item, count: num })
+                    // { ...this.item, count: num }表示 新建了一个对象  拷贝了item 对象 并且替换了原来的
+                }
+            },
+            components: {       //这是在list-item的实例上注册的，只能用在list-item上   局部组件
+                "add-count": {
+                    props: ["num"],//props 写了就有的接
+                    template: `
+                    <div class="add-count">
+                        <span @click="cutCount" v-if="num" class="addcut-span">-</span> 
+                        <span v-if="num">{{ num }}</span> 
+                        <span @click="addCount" class="addcut-span">+</span>
+                    </div>`,
+
+                    props: ["count"],
+                    methods: {
+                        // **`$emit`** 是Vue实例 和组件实例的一个方法, 它的意思是触发自定义事件
+                        // 语法: $emit(事件名, ...参数)
+
+                        // 定义一个点击减号的时候调用
+                        cutCount() {
+
+                            this.$emit("changecount", this.count - 1)
+                        },
+                        // 定义一个点击加号的时候调用
+                        // props 没有办法直接修改  他是只读的
+                        // 子 => 父
+                        // 触发自定义事件  $emit(自定义事件(小写),事件名)
+                        addCount() {
+                            this.$emit("changenum", this.num + 1)  //指的是
+                            // 相当于我出发了一个事件，这个事件携带了一个参数  数值
+                        }
+                    }
+                }
+            }
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                // vue实例数据
+                list: [
+                    {
+                        id: 1,//表示
+                        img: 'https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1582512983&di=b8fea2d1395848fa67073dd9d301775c&src=http://e.hiphotos.baidu.com/nuomi/wh=470,285/sign=7c38b3907a310a55c471d6f080756f9b/9d82d158ccbf6c810b04058bbf3eb13533fa40a5.jpg',//菜品名称
+                        count: 0,//点了几份
+                        title: '烧烤'//菜品名称
+
+                    },
+                    {
+                        id: 2,//表示
+                        img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1582523064307&di=8adaf47f160d3fadb9488178a4def781&imgtype=0&src=http%3A%2F%2Ffile1.youboy.com%2Fd%2F149%2F15%2F4%2F7%2F540487s.jpg',//菜品名称
+                        count: 0,//点了几份
+                        title: '羊肉串'//菜品名称
+                    },
+                    {
+                        id: 3,//表示
+                        img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1582523064307&di=31ba0f78f2e5cc76f0e54c779bd366fd&imgtype=0&src=http%3A%2F%2Ffile2.youboy.com%2Fe%2F2015%2F3%2F14%2F28%2F508250s.jpg',//菜品名称
+                        count: 0,//点了几份
+                        title: '板筋'//菜品名称
+                    },
+                    {
+                        id: 4,//表示
+                        img: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2664388752,2355600147&fm=26&gp=0.jpg',//菜品名称
+                        count: 0,//点了几份
+                        title: '烤肉'//菜品名称
+                    }
+                ]//list数组 是vue实例的数据，里面应该是所有菜品的数据
+            },
+
+            methods: {
+
+                listChange(id, num) {
+                    // Vue 实例拿到   自我更新
+                    alert(id + "------" + num)
+                    // 爷爷级的组件  vue实例 拿到了id和数字
+                    let obj = this.find(item => item.id === id)//找到符合条件的id
+                    obj.count = num
+                }
+
+            },
+
+            component: {
+
+            }//注册vue实例  只能在vue实例上使用
+
+        });
+
+
+        // 我们要用props特性进行 父组件 传给子组件的过程
+        // 1. 第一步,我们需要在ListItem的标签上定义属性 
+        // ​口令`** **`给谁传值 就在谁的标签上定义属性`**
+        // 2.第二步 我们需要 在ListItem的组件实例上用props接收属性
+        // 3. 第三步, 我们已经可以获取item属性了, 怎么取呢 , data中的变量你怎么取, props就怎么取
+        //我们可以通过 this.属性 获取data中的数据 /props中的数据/计算属性/ methods方法
+
+        // 但是,当我们点击**`加号`**或者**`减号`**的时候,业务逻辑还不完整, 这个我们需要用另外一种传值方式, 
+        // 子组件 => 父组件
+        // 为什么还要传递呢 ? 因为Props传递的数据是**`只读`**的, 也就是数据只能读取,不能修改,想改的话,只能回到源数据的位置去改**`源数据`**
+    </script>
+</body>
+
+</html>

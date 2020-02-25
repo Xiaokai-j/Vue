@@ -9,14 +9,42 @@
 </head>
 
 <body>
-    <div id="app"></div>
+    <div id="app">
+        <span-btn></span-btn>
+        <span-btn></span-btn>
+        <span-btn></span-btn>
+        <span-btn></span-btn>
+        <span-btn></span-btn>
+
+    </div>
     <script src="./js/vue.js"></script>
     <script>
-        var vm = new Vue({
+        // 全局组件代码
+        // 一个标签就是一个组件实例, 实例之间`没有任何关系`!
+        Vue.component("span-btn", {
+            template: `<div>
+              <span>{{count}}</span> <button @click="changeCount">按钮</button> <br>
+    </div>`,
+            // 大家注意看,我们的data并没有像往常一样  data: {} , 而是成了一个函数, 函数中 **`return {}`**你需要知道 {} 是和 new Object() 一样的, 
+            //这就是说 每个实例都是重新 new Object(), 相互之间,数据不产生任何关联如果像往常一样用data:{} , 表示所有实例都用同一个对象, 
+            //就好比,你和一个陌生人 买了同一款汽车,然后你一踩油门, 别人的车和你的车一样, 都往前冲!  行吗 ? **`肯定不行`**! 这就是这里 为什么要**`return {}
+            data() {
+                return {
+                    count: 0
+                }
+            },
+            methods: {
+                changeCount() {
+                    this.count++;
+                }
+            }
+        })
+        new Vue({
             el: '#app',
-            data: {},
-            methods: {}
-        });
+        })
+            // - Vue实例有的,组件几乎都有,但是组件**`不需要el`**
+            //- 组件的data是带返回值函数, Vue实例的data是一个对象
+            //- 组件用 ** `template` ** 来表现自己的 ** `页面结构` **, 要求 ** `有且只有一个根节点`
     </script>
 </body>
 
